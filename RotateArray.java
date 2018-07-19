@@ -8,7 +8,7 @@ class Solution {
             for (int i = 0; i < nums.length; i++) {
                 
                 if(i == 0) {
-                    // put the last number in the array in the beggining. 
+                    // put the last number in the array in the beginning. 
                     next = nums[0];
                     nums[0] = nums[nums.length-1];
                 }
