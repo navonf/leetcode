@@ -33,10 +33,46 @@ class Graph {
     nodes[3].children.add(nodes[2]);
     nodes[3].children.add(nodes[4]);
 
-    // The DFS traversal should be.
+    // The DFS traversal should be:
     // 0, 1, 3, 2, 4, 5
-    // DFS3(nodes[0]);
-    BFS(nodes[0]);
+    DFS4(nodes[0]);
+    // The BFS traversal should be:
+    // 0, 1, 4, 5, 3, 2
+    // BFS2(nodes[0]);
+  }
+
+  // 10/8/18
+  public static void DFS4(Node root) {
+    // Compact lol
+    if(root == null) return;
+    root.visited = true;
+    System.out.println("Node: "+ root.name);
+    for(Node curr : root.children)
+      if(!curr.visited) DFS4(curr);
+  }
+
+  // 10/8/18
+  public static void BFS2(Node root) {
+    // Queue data structure.
+    ArrayDeque<Node> queue = new ArrayDeque<Node>();
+
+    // Start off the queue, with the root node.
+    queue.offer(root);
+    root.visited = true;
+
+    while(!queue.isEmpty()) {
+      // Process node
+      Node currNode = queue.poll();
+      System.out.println("Node: "+currNode.name);
+
+      for(Node child : currNode.children) {
+        if(!child.visited) {
+          queue.offer(child);
+          child.visited = true;
+        }
+      }
+    }
+
   }
 
   // 10/7/18
