@@ -35,10 +35,104 @@ class Graph {
 
     // The DFS traversal should be:
     // 0, 1, 3, 2, 4, 5
-    DFS4(nodes[0]);
+    // DFS5(nodes[0]);
     // The BFS traversal should be:
     // 0, 1, 4, 5, 3, 2
-    // BFS2(nodes[0]);
+    // BFS4(nodes[0]);
+    // if(isRoute(nodes[0], nodes[2]))
+    //   System.out.println("YES! a path");
+    // else
+    //   System.out.println("No path! You suck!");
+  }
+
+  // 10/13/18
+  // Cracking the coding question 4.1 Is there a valid path?
+  // Used a classic BFS to just search the graph from start
+  // to end.
+  public static boolean isRoute(Node start, Node end) {
+    // If the nodes are the same, obviously there is a path.
+    if(start.name == end.name)
+      return true;
+
+    // Since we got past the first check, mark the first node.
+    // Throw it in the queue, and start the algorithm.
+    ArrayDeque<Node> queue = new ArrayDeque<Node>();
+    start.visited = true;
+    queue.offer(start);
+
+    while(!queue.isEmpty()) {
+      Node current = queue.poll();
+
+      // This is where we chek each node coming
+      // out of the queue.
+      System.out.println("Node: " + current.name);
+
+      // There is a path if we've gotten to the end node.
+      if(current.name == end.name)
+        return true;
+
+      // Queue up the neighbors and mark as visited.
+      for(Node child : current.children) {
+        if(!child.visited) {
+          child.visited = true;
+          queue.offer(child);
+        }
+      }
+    }
+
+    // If we make it to the end without seeing the end node,
+    // There is no path, return false.
+    return false;
+  }
+
+  // 10/12/18
+  public static void BFS4(Node root) {
+    ArrayDeque<Node> q = new ArrayDeque<Node>();
+    q.offer(root);
+    root.visited = true;
+
+    while(!q.isEmpty()) {
+      Node curr = q.poll();
+      System.out.println("Node: " + curr.name);
+
+      for(Node n : curr.children) {
+        if(!n.visited) {
+          q.offer(n);
+          n.visited = true;
+        }
+      }
+    }
+  }
+
+  // 10/11/18
+  public static void DFS5(Node root) {
+    if(root == null) return;
+    root.visited = true;
+    // Processing with the node.
+    System.out.println("Node: " + root.name);
+    for(Node n : root.children)
+      if(!n.visited) DFS5(n);
+  }
+
+  // 10/11/18
+  public static void BFS3(Node root) {
+    ArrayDeque<Node> queue = new ArrayDeque<Node>();
+    queue.offer(root);
+    root.visited = true;
+
+    while(!queue.isEmpty()) {
+      Node currentNode = queue.poll();
+
+      // Process here if needed.
+      System.out.println("Node: " + currentNode.name);
+
+      for(Node child : currentNode.children) {
+        if(!child.visited) {
+          queue.offer(child);
+          child.visited = true;
+        }
+      }
+    }
   }
 
   // 10/8/18
