@@ -39,10 +39,10 @@ class Graph {
     // The BFS traversal should be:
     // 0, 1, 4, 5, 3, 2
     // BFS4(nodes[0]);
-    // if(isRoute(nodes[0], nodes[2]))
-    //   System.out.println("YES! a path");
-    // else
-    //   System.out.println("No path! You suck!");
+    if(isRoute(nodes[0], nodes[0]))
+      System.out.println("YES! a path");
+    else
+      System.out.println("No path! You suck!");
   }
 
   // 10/13/18
@@ -51,8 +51,11 @@ class Graph {
   // to end.
   public static boolean isRoute(Node start, Node end) {
     // If the nodes are the same, obviously there is a path.
-    if(start.name == end.name)
+    if(start.name == end.name) {
+      System.out.println("Same node.");
       return true;
+    }
+
 
     // Since we got past the first check, mark the first node.
     // Throw it in the queue, and start the algorithm.
