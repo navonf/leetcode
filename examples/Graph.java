@@ -35,14 +35,23 @@ class Graph {
 
     // The DFS traversal should be:
     // 0, 1, 3, 2, 4, 5
-    // DFS5(nodes[0]);
+    DFS6(nodes[0]);
     // The BFS traversal should be:
     // 0, 1, 4, 5, 3, 2
     // BFS4(nodes[0]);
-    if(isRoute(nodes[0], nodes[0]))
-      System.out.println("YES! a path");
-    else
-      System.out.println("No path! You suck!");
+    // if(isRoute(nodes[0], nodes[0]))
+    //   System.out.println("YES! a path");
+    // else
+    //   System.out.println("No path! You suck!");
+  }
+
+  public static void DFS6(Node root) {
+    if(root == null) return;
+    root.visited = true;
+    System.out.println("Node: " + root.name);
+    for(Node curr : root.children)
+      if(!curr.visited)
+        DFS6(curr);
   }
 
   // 10/13/18
