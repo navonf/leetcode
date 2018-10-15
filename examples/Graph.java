@@ -7,6 +7,7 @@ class Graph {
   public static final int SIZE = 6;
   public static void main(String[] args) {
     // Graph of size 6.
+    // Easiest way to store the nodes.
     nodes = new Node[SIZE];
 
     // Build graph.
@@ -35,16 +36,36 @@ class Graph {
 
     // The DFS traversal should be:
     // 0, 1, 3, 2, 4, 5
-    DFS6(nodes[0]);
+    // DFS6(nodes[0]);
     // The BFS traversal should be:
     // 0, 1, 4, 5, 3, 2
-    // BFS4(nodes[0]);
+    BFS5(nodes[0]);
     // if(isRoute(nodes[0], nodes[0]))
     //   System.out.println("YES! a path");
     // else
     //   System.out.println("No path! You suck!");
   }
 
+  // 10/14/18
+  public static void BFS5(Node root) {
+    ArrayDeque<Node> q = new ArrayDeque<Node>();
+    root.visited = true;
+    q.offer(root);
+
+    while(!q.isEmpty()) {
+      Node current = q.poll();
+      System.out.println("Node " + current.name);
+
+      for(Node child:current.children) {
+        if(!child.visited) {
+          child.visited = true;
+          q.offer(child);
+        }
+      }
+    }
+  }
+
+  // 10/13/18
   public static void DFS6(Node root) {
     if(root == null) return;
     root.visited = true;
