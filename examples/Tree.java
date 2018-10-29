@@ -4,25 +4,74 @@ import java.util.ArrayList;
 class Tree {
   public static void main(String[] args) {
 
-    Node root = new Node(5);
-    root.insert(3);
-    root.insert(9);
+    Node root = new Node(10);
+    root.insert(5);
+    root.insert(15);
     root.insert(1);
-    root.insert(4);
-    root.insert(10);
+    root.insert(8);
+    root.insert(12);
+    root.insert(20);
+    // root.preorder();
+    connect(root);
+
+    root.inorder();
 
     // root.inorder();
     // System.out.println(root.contains(1513475));
-    ArrayList<ArrayList<Node>> answer = levelOrder(root);
-    for(ArrayList<Node> a : answer) {
-      System.out.print("[");
-      for(Node n : a) {
-        System.out.print(n.data +", ");
-      }
-      System.out.print("], ");
-    }
-    System.out.println();
+    // ArrayList<ArrayList<Node>> answer = levelOrder(root);
+    // for(ArrayList<Node> a : answer) {
+    //   System.out.print("[");
+    //   for(Node n : a) {
+    //     System.out.print(n.data +", ");
+    //   }
+    //   System.out.print("], ");
+    // }
+    // System.out.println();
   }
+
+  public static void connect(Node root) {
+        if(root == null) return;
+        ArrayDeque<Node> q = new ArrayDeque<Node>();
+
+        q.offer(root);
+
+        while(!q.isEmpty()) {
+            ArrayList<Node> list = new ArrayList<Node>();
+
+            System.out.println("in queue:");
+            while(!q.isEmpty()) {
+                Node polled = q.poll();
+                System.out.print(polled.data + " ");
+                list.add(polled);
+
+            }
+            System.out.println();
+            Node prev = null;
+
+            // System.out.println("in list:");
+            for(Node n : list) {
+                // System.out.print(n.data +" ");
+                if(prev != null) {
+                    prev.next = n;
+                    prev = n;
+                }
+                else {
+                    prev = n;
+                }
+
+                if(n.left != null) {
+                    q.offer(n.left);
+                }
+
+                if(n.right != null) {
+                    q.offer(n.right);
+                }
+            }
+            System.out.println();
+
+            prev.next = null;
+        }
+    }
 
   public static ArrayList<ArrayList<Node>> levelOrder(Node root) {
     ArrayDeque<Node> queue = new ArrayDeque<Node>();
@@ -70,15 +119,72 @@ class Tree {
 
 }
 
+
+class NodePractice {
+  public int data;
+  public NodePractice left, right;
+
+  NodePractice(int d) {
+    this.data = d;
+    this.left = this.right = null;
+  }
+
+  public void insert(int value) {
+    if(value <= data) {
+      if(left == null) {
+        left = new NodePractice(value);
+      }
+      else {
+        left.insert(value);
+      }
+    }
+    else {
+      if(right == null) {
+        right = new NodePractice(value);
+      }
+      else {
+        right.insert(value);
+      }
+    }
+  }
+
+
+  public boolean contains(int value) {
+    if(data == value) {
+      return true;
+    }
+    else if(value < data) {
+      if(left == null) {
+        return false;
+      }
+      else {
+        return left.contains(value);
+      }
+    }
+    else {
+      if(right == null) {
+        return false;
+      }
+      else {
+        return right.contains(value);
+      }
+    }
+  }
+
+}
+
 // BST
 class Node {
-  public Node left, right;
+  // next node is to model the function connect.
+  // only for problem purposes.
+  public Node left, right, next;
   public int data;
 
   Node(int d) {
     this.data = d;
     this.left = null;
     this.right = null;
+    this.next = null;
   }
 
   public void insert(int value) {
@@ -129,7 +235,17 @@ class Node {
       left.inorder();
     }
 
-    System.out.println(data);
+    // really specific example, just to show that the nodes on the same level
+    // are connected.
+    if( (data > 0 && data < 8 ) || (data > 8 && data <= 10) ) {
+      Node temp = this;
+      while(temp != null) {
+        System.out.print(temp.data +" -> ");
+        temp = temp.next;
+      }
+      System.out.print("null");
+      System.out.println();
+    }
 
     if(right != null) {
       right.inorder();
