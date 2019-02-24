@@ -10,7 +10,7 @@ class Solution {
                 int freq = map.get(num);
                 map.put(num, ++freq);
             }
-            // we dont have it, init with frew of 1.
+            // we dont have it, init with freq of 1.
             else {
                 int freq = 1;
                 map.put(num, freq);
