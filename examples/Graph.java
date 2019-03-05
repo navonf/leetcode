@@ -34,16 +34,108 @@ class Graph {
     nodes[3].children.add(nodes[2]);
     nodes[3].children.add(nodes[4]);
 
+    // Node 4 has no outbound edges.
+    // Node 5 hsa no outbound edges.
+
+
+    // Link to view a picture of the graph.
+    // https://github.com/navonf/leetcode/blob/master/examples/graphctci.png
+    // ---------------------------------------------------------------------
     // The DFS traversal should be:
     // 0, 1, 3, 2, 4, 5
-    // DFS6(nodes[0]);
+    // DFS8(nodes[0]);
     // The BFS traversal should be:
     // 0, 1, 4, 5, 3, 2
-    BFS5(nodes[0]);
-    // if(isRoute(nodes[0], nodes[0]))
+    BFS7(nodes[0]);
+
+    // Question 4.1, Cracking the Coding Interview.
+    // if(isRoute(nodes[1], nodes[0]))
     //   System.out.println("YES! a path");
     // else
     //   System.out.println("No path! You suck!");
+
+  }
+
+  // 11/7/18
+  public static void BFS7(Node root) {
+    // using a Queue to achieve breadth first search
+    ArrayDeque<Node> q = new ArrayDeque<Node>();
+
+    // insert first node into the queue, mark as visited.
+    // starts the BFS process
+    root.visited = true;
+    q.offer(root);
+
+    // dequeue current node, and enqueue the current node's children
+    // do this until queue is empty
+    while(!q.isEmpty()) {
+      // pull out first node and process
+      Node current = q.poll();
+      System.out.println("Node: "+current.name);
+
+      // now enqueue it's children (unvisited), mark as visited as we go along
+      for(Node child : current.children) {
+        if(!child.visited) {
+          child.visited = true;
+          q.offer(child);
+        }
+      }
+    }
+  }
+
+  // 11/7/18
+  public static void DFS8(Node root) {
+    if(root == null) {
+      return;
+    }
+
+    // mark as visited.
+    root.visited = true;
+    System.out.println("Node: " + root.name);
+    // DFS through the children nodes.
+    // children being an ArrayList<Node>
+    for(Node child : root.children) {
+      // visit the node is it hasn't been visited before.
+      if(!child.visited) {
+        DFS8(child);
+      }
+    }
+  }
+
+  // 10/17/18
+  public static void DFS7(Node root) {
+    if(root == null) {
+      return;
+    }
+
+    root.visited = true;
+    System.out.println("Node : " + root.name);
+
+    for(Node n : root.children) {
+      if(!n.visited) {
+        DFS7(n);
+      }
+    }
+  }
+
+  //10/17/18
+  public static void BFS6(Node root) {
+    ArrayDeque<Node> q = new ArrayDeque<Node>();
+    root.visited = true;
+    q.offer(root);
+
+    while(!q.isEmpty()) {
+      Node current = q.poll();
+      System.out.println("Node: "+ current.name);
+
+      for(Node child : current.children) {
+        if(!child.visited) {
+          child.visited = true;
+          q.offer(child);
+        }
+      }
+    }
+
   }
 
   // 10/14/18
@@ -141,8 +233,6 @@ class Graph {
   public static void DFS5(Node root) {
     if(root == null) return;
     root.visited = true;
-    // Processing with the node.
-    System.out.println("Node: " + root.name);
     for(Node n : root.children)
       if(!n.visited) DFS5(n);
   }
