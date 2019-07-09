@@ -83,3 +83,59 @@ class Word {
         return sb.toString();
     }
 }
+
+// i did it again. 7/9/19.
+// class Solution {
+//     public List<List<String>> groupAnagrams(String[] strs) {
+//         List<List<String>> list = new ArrayList<>();
+//         HashMap<String, ArrayList<String>> map = new HashMap<>();
+        
+//         for(String s : strs) {
+//             Word word = new Word(s);
+            
+//             // if the map has our sorted key in it, just add the word to it's value's list.
+//             if(map.containsKey(word.sorted)) {
+//                 ArrayList<String> temp = map.get(word.sorted);
+//                 temp.add(word.text);
+//                 map.put(word.sorted, temp);
+//             }
+//             // make one, and then add to it's value's list.
+//             else {
+//                 ArrayList<String> temp = new ArrayList<String>();
+//                 temp.add(word.text);
+//                 map.put(word.sorted, temp);
+//             }
+//         }
+        
+//         map.forEach((sortedKey, wordList) -> {
+//             list.add(wordList);
+//         });
+        
+//         return list;
+//     }
+    
+//     class Word {
+//         String text;
+//         String sorted;
+        
+//         Word(String s) {
+//             this.text = s;
+//             this.sorted = sort(s);
+//         }
+        
+//         public String sort(String s) {
+//             PriorityQueue<Character> pq = new PriorityQueue<>();
+//             for(char letter : s.toCharArray()) {
+//                 pq.offer(letter);
+//             }
+            
+//             StringBuilder sb = new StringBuilder();
+            
+//             while(!pq.isEmpty()) {
+//                 sb.append(pq.poll());
+//             }
+            
+//             return sb.toString();
+//         }
+//     }
+// }
