@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Arrays;
+import java.util.Queue;
 import java.util.ArrayDeque;
 
 class Graph {
@@ -46,7 +48,7 @@ class Graph {
     // DFS8(nodes[0]);
     // The BFS traversal should be:
     // 0, 1, 4, 5, 3, 2
-    BFS7(nodes[0]);
+    bfs9(nodes[0]);
 
     // Question 4.1, Cracking the Coding Interview.
     // if(isRoute(nodes[1], nodes[0]))
@@ -56,26 +58,52 @@ class Graph {
 
   }
 
+  // 04/15/20
+  public static void bfs9(Node root) {    
+    Queue<Node> q = new LinkedList<>();
+    root.visited = true;
+    q.offer(root);
+  
+    while (!q.isEmpty()) {
+      // poll front of queue
+      Node current = q.poll();
+      System.out.println("Node: " + current.name);
+      
+      for (Node child : current.children) {
+        // lol i haven't done this in a while. I sat here for a good 10 minutes
+        // with wrong output because i put !current.visited instead of !child.visited
+        // ..its late
+        if (!child.visited) {
+          child.visited = true;
+          q.offer(child);
+        }
+      }
+    }
+
+    // thought process:
+    // while the queue is not empty
+    //   dequeue the front of the q
+    //   process that node
+    //   enqueue its children into the queue
+  }
+
   // 11/7/18
   public static void BFS7(Node root) {
     // using a Queue to achieve breadth first search
     ArrayDeque<Node> q = new ArrayDeque<Node>();
-
-    // insert first node into the queue, mark as visited.
-    // starts the BFS process
     root.visited = true;
     q.offer(root);
 
     // dequeue current node, and enqueue the current node's children
     // do this until queue is empty
-    while(!q.isEmpty()) {
-      // pull out first node and process
+    while (!q.isEmpty()) {
+      // poll front of queue
       Node current = q.poll();
-      System.out.println("Node: "+current.name);
+      System.out.println("Node: " + current.name);
 
       // now enqueue it's children (unvisited), mark as visited as we go along
-      for(Node child : current.children) {
-        if(!child.visited) {
+      for (Node child : current.children) {
+        if (!child.visited) {
           child.visited = true;
           q.offer(child);
         }
