@@ -1,36 +1,31 @@
-class NumberOfIslands {
+class Solution {
     public int numIslands(char[][] grid) {
-        // This grid has 1's or 0's, nothings else.
-        // Null grid will have no islands.
-        if(grid == null) return 0;
-
         int islandCount = 0;
-
-        // Iterate over the grid.
-        for(int i = 0; i < grid.length; i++) {
-            for(int j = 0; j < grid[0].length; j++) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
                 if(grid[i][j] == '1') {
-                    // increase island count.
                     islandCount++;
-                    // change any connecting 1's to a 0.
-                    changeLandToWaterDFS(grid, i, j);
+                    dfs(i, j, grid);
                 }
             }
         }
-
         return islandCount;
     }
-
-    private void changeLandToWaterDFS(char[][] grid, int i, int j) {
-        if(i < 0 || i >= grid.length ||
-           j < 0 || j >= grid[0].length ||
-          grid[i][j] == '0') return;
-
+    
+    public void dfs(int i, int j, char[][] grid) {
+        if (i < 0 || j < 0 || i > grid.length-1 || 
+            j > grid[0].length-1 || grid[i][j] == '0') {
+            return;
+        }
+        // the spot is valid, put a 0 to mark as visited.
         grid[i][j] = '0';
-
-        changeLandToWaterDFS(grid, i + 1, j); // up
-        changeLandToWaterDFS(grid, i - 1, j); // down
-        changeLandToWaterDFS(grid, i, j + 1); // right
-        changeLandToWaterDFS(grid, i, j - 1); // left
+        // go up
+        dfs(i-1, j, grid);
+        // go right
+        dfs(i, j+1, grid);
+        // go left
+        dfs(i, j-1, grid);
+        // go down
+        dfs(i+1, j, grid);
     }
 }
