@@ -7,40 +7,35 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-class LevelOrderLists {
+class Solution {
     public List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> bigList = new ArrayList<List<Integer>>();
-        ArrayDeque<TreeNode> q = new ArrayDeque<TreeNode>();
-
-        if(root == null) {
-            return bigList;
+        List<List<Integer>> list = new LinkedList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+        
+        if (root == null) {
+            return list;
         }
-
+        
         q.offer(root);
-
-        while(!q.isEmpty()) {
-            List<TreeNode> nodeList = new ArrayList<TreeNode>();
-            List<Integer> smallList = new ArrayList<Integer>();
-
-            while(!q.isEmpty()) {
-                nodeList.add(q.poll());
-            }
-
-            for(TreeNode n : nodeList) {
-                if(n.left != null) {
-                    q.offer(n.left);
+        
+        while (!q.isEmpty()) {
+            List<Integer> level = new LinkedList<>();
+            int levelSize = q.size();
+            
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode curr = q.poll();
+                level.add(curr.val);
+                if (curr.left != null) {
+                    q.offer(curr.left);
                 }
-
-                if(n.right != null) {
-                    q.offer(n.right);
+                if (curr.right != null) {
+                    q.offer(curr.right);
                 }
-
-                smallList.add(n.val);
             }
-
-            bigList.add(smallList);
+            
+            list.add(level);
         }
-
-        return bigList;
+        
+        return list;
     }
 }
