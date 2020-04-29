@@ -4,22 +4,29 @@
  *     int val;
  *     TreeNode left;
  *     TreeNode right;
- *     TreeNode(int x) { val = x; }
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
  * }
  */
-class isSameTree {
+class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
-        return check(p, q);
+        return dfs(p, q);
     }
     
-    public boolean check(TreeNode p, TreeNode q) {
-        if(p == null && q == null) return true;
-        else if(p != null && q == null) return false;
-        else if(q != null && p == null) return false;
-        else if(p.val == q.val) {
-            return check(p.left, q.left) && check(p.right, q.right);
+    public boolean dfs(TreeNode p, TreeNode q) {
+        if (p == null && q == null) {
+            return true;
         }
         
-        return false;
+        if (p == null || q == null) {
+            return false;
+        }
+        
+        return (p.val == q.val) && dfs(p.left, q.left) && dfs(p.right, q.right);
     }
 }
