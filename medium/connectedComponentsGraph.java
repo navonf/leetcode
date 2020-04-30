@@ -22,24 +22,36 @@ class Solution {
             Node currNode = graph.get(node);
             
             if (!currNode.visited) {
-                // bfs
-                Queue<Node> q = new LinkedList<>();                
-                q.offer(currNode);
-                
-                while (!q.isEmpty()) {
-                    currNode = q.poll();
-                    currNode.visited = true;
-                    for (Node child : currNode.children) {
-                        if (!child.visited) {
-                            q.offer(child);
-                        }
-                    }
-                }
-                
+                // bfs or dfs
+                dfs(currNode);
                 connectedComponentGroups++;
             }
         }
         return connectedComponentGroups;
+    }
+    
+    public void dfs(Node currNode) {
+        for (Node child : currNode.children) {
+            if (!child.visited) {
+                child.visited = true;
+                dfs(child);
+            }
+        }
+    }
+    
+    public void bfs(Node currNode) {
+        Queue<Node> q = new LinkedList<>();                
+        q.offer(currNode);
+
+        while (!q.isEmpty()) {
+            currNode = q.poll();
+            currNode.visited = true;
+            for (Node child : currNode.children) {
+                if (!child.visited) {
+                    q.offer(child);
+                }
+            }
+        }
     }
 }
 
