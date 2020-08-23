@@ -1,41 +1,63 @@
-import java.awt.*;
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
-        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        int[] mostFrequentElements = new int[k];
+        HashMap<Integer, Integer> map = new HashMap<>();
+        PriorityQueue<element> maxHeap = new PriorityQueue<element>(
+            nums.length,
+            (e1, e2) -> Integer.compare(e2.freq, e1.freq)
+        );
+//         PriorityQueue<element> maxHeap = new PriorityQueue<element>(nums.length, new Comparator<element>() {
+//                 @Override
+//                 public int compare(element e1, element e2) {
+//                     /*** Long way: ***
+                    
+//                     // negative num sorts (moves) elements to the front
+//                     if (e1.freq > e2.freq) {
+//                         return -1;
+//                     }
+//                     // positive num sorts (moves) elements to the back
+//                     else if (e1.freq < e2.freq) {
+//                         return 1;
+//                     }
+//                     return 0;
+                    
+//                     */
+                    
+//                     /*** Shorter **
+//                     return Integer.compare(e2.freq, e1.freq);
+//                     */
+//                 }
+//             }
+//         );
         
-        for(int i = 0; i < nums.length; i++) {
-            int num = nums[i];
-            
-            // we already have it just update the count.
-            if(map.containsKey(num)) {
+        for (int num : nums) {
+            if (map.containsKey(num)) {
                 int freq = map.get(num);
                 map.put(num, ++freq);
             }
-            // we dont have it, init with freq of 1.
             else {
-                int freq = 1;
-                map.put(num, freq);
+                map.put(num, 1);
             }
         }
-        
-        PriorityQueue<Point> pq = new PriorityQueue<Point>(map.size(), new Comparator<Point>() {
-                @Override
-                public int compare(Point p1, Point p2) {
-                    return Integer.compare(p2.y, p1.y);
-                }
-            }
-        );
         
         map.forEach((key, val) -> {
-            pq.offer(new Point(key, val));
+            maxHeap.offer(new element(key, val));
         });
         
-        int[] ans = new int[k];
- 
-        for(int i = 0; i < k; i++) {
-            ans[i] = pq.poll().x;
+        for (int i = 0; i < k; i++) {
+            mostFrequentElements[i] = maxHeap.poll().num;
         }
         
-        return ans;
+        return mostFrequentElements;
+    }
+}
+
+class element {
+    int num;
+    int freq;
+    
+    element(int n, int f) {
+        this.num = n;
+        this.freq = f;
     }
 }
