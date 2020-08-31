@@ -13,6 +13,7 @@ class Solution {
         ListNode fast = head;
         ListNode ogHead = head;
         
+        // iterate a fast pointer ahead n steps
         for (int i = 0; i < n; i++) {
             fast = fast.next;
         }
@@ -22,11 +23,15 @@ class Solution {
             return head.next;
         }
         
+        // iterate both pointers until we get to the end
         while (fast.next != null) {
             head = head.next;
             fast = fast.next;
         }
         
+        // now connect head to the node after the nth node
+        // since we iterated a fast pointer n steps, 
+        // we know head.next is the nth node 
         head.next = head.next.next;
 
         return ogHead;
