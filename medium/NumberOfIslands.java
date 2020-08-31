@@ -13,6 +13,9 @@ class Solution {
     }
     
     public void dfs(int i, int j, char[][] grid) {
+        // remember to check grid[i][j] because we are using
+        // the indicies to index into the array, if invalid,
+        // it will lead to an index out of bound.
         if (i < 0 || j < 0 || i > grid.length-1 || 
             j > grid[0].length-1 || grid[i][j] == '0') {
             return;
