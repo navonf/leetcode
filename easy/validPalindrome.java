@@ -7,7 +7,8 @@ class Solution {
         int left = 0;
         int right = s.length() - 1;
         // we have a left and right pointer, starting on respective sides
-        // of the string. if at a valid character, for both, and they are 
+        // of the string. if at a valid character, for both, and they are
+        // equal, increment left and decrement right.
         while (left < right) {
             // check if invalid character?
             if (!isValidCharacter(s.charAt(left))) {
