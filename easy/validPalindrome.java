@@ -1,23 +1,40 @@
 class Solution {
     public boolean isPalindrome(String s) {
-        int i = 0;
-        int j = s.length() - 1;
-        
-        // check letters until i surpasses j
-        while(i < j) {
-            // check out of bounds, and alphanum. if not increase i
-            while(i < j && !Character.isLetterOrDigit(s.charAt(i)))
-                i++;
-            // check out of bounds, and alphanum. if not decrease j
-            while(i < j && !Character.isLetterOrDigit(s.charAt(j)))
-                j--;
-            // check if the same, if not return false
-            if(i < j && Character.toLowerCase(s.charAt(i)) != Character.toLowerCase(s.charAt(j)))
-                return false;
-            
-            i++;
-            j--;
+        if (s.length() == 0) {
+            return true;
         }
+        
+        int left = 0;
+        int right = s.length() - 1;
+        // we have a left and right pointer, starting on respective sides
+        // of the string. if at a valid character, for both, and they are 
+        while (left < right) {
+            // check if invalid character?
+            if (!isValidCharacter(s.charAt(left))) {
+                left++;
+                continue;
+            }
+            if (!isValidCharacter(s.charAt(right))) {
+                right--;
+                continue;
+            }
+            
+            // tolower both, check equality
+            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        
         return true;
+    }
+    
+    // check if c is alphanumeric
+    private boolean isValidCharacter(char c) {
+        return 
+            (48 <= c && c <= 57) ||
+            (65 <= c && c <= 90) || 
+            (97 <= c && c <= 122);
     }
 }
